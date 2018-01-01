@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>table</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div style="text-align: center" id="username">
+    游客
+</div>
+<div class="container" id="box">
+    <form role="form">
+        <label>新闻编号：</label>
+        <div class="form-group">
+            <input type="text" style='float: left;width: 90%' class="form-control" id="idx" placeholder="输入新闻编号"/>
+            <input type="button" style='float: left;width: auto' value="查询" class="btn btn-primary"
+                   onClick="getnewsbyid()"/>
+        </div>
+        <br>
+        <label>新闻标题：</label>
+        <div class="form-group">
+            <input type="text" style='float: left;width: 90%' id="title" class="form-control" placeholder="输入新闻标题"/>
+            <input type="button" style='float: left;width: auto' value="查询" class="btn btn-primary"
+                   onClick="getnewsbytitle()"/>
+        </div>
+        <br>
+        <label>新闻日期：</label>
+        <div class="form-group">
+            <input type="text" style='float: left;width: 90%' id="date" class="form-control" placeholder="输入新闻日期"/>
+            <input type="button" style='float: left;width: auto' value="查询" class="btn btn-primary"
+                   onClick="getnewsbydate()"/>
+        </div>
+        <br>
+        <label>新闻地址：</label>
+        <div class="form-group">
+            <input type="text" style='float: left;width: 90%' id="url" class="form-control" v-model="date"
+                   placeholder="输入新闻地址"/>
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="button" style="float: left;" value="添加新闻" class="btn btn-primary" onClick="addnews()"/>
+            <input type="button" style="float: inherit;" value="提升权限" class="btn btn-primary" onClick="uppower()"/>
+        </div>
+    </form>
+    <hr/>
+    <table class="table table-bordered table-hover" id="newstable">
+    </table>
+</div>
+</body>
+
+<script type="text/javascript">
+    var xmlHttp;
+    var strs = new Array();
+
+    window.onload = function () {
+        getallnews();
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.split(";")) {
+            //alert(document.cookie);
+            document.getElementById("username").innerHTML = arr[arr.length - 1];
+        }
+    }
+    function getallnews() {
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/getAllNews";
+        xmlHttp.open("GET", url, true);
+        xmlHttp.onreadystatechange = getnewscallback;
+        xmlHttp.send(null);
+    }
+
+    //更新指定table通过id
+    function getnewsbyid() {
+        var idx = document.getElementById("idx").value;
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/getNewsById";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送json字符串
+        //Content-Type其他格式信息：https://segmentfault.com/a/1190000004982390
+        xmlHttp.onreadystatechange = getnewscallback;
+        xmlHttp.send(idx);
+        //alert(idx);
+    }
+
+    //更新table按指定title
+    function getnewsbytitle() {
+        var title = document.getElementById("title").value;
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/getNewsByTitle";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送json字符串
+        //Content-Type其他格式信息：https://segmentfault.com/a/1190000004982390
+        xmlHttp.onreadystatechange = getnewscallback;
+        xmlHttp.send(title);
+    }
+
+    //更新table通过date
+    function getnewsbydate() {
+        var date = document.getElementById("date").value;
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/getNewsByDate";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送json字符串
+        //Content-Type其他格式信息：https://segmentfault.com/a/1190000004982390
+        xmlHttp.onreadystatechange = getnewscallback;
+        xmlHttp.send(date);
+    }
+
+    //删除新闻通过id
+    function deletenews(idc) {
+        var power = document.getElementById("username").value;
+        if (!power.match("admin")) return;
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/deleteNews";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送json字符串
+        //Content-Type其他格式信息：https://segmentfault.com/a/1190000004982390
+        xmlHttp.onreadystatechange = deletenewscallback;
+        xmlHttp.send(idc);
+        //alert(idc);
+    }
+
+    //添加一条新闻
+    function addnews() {
+        var newstitle = document.getElementById("title").value;
+        var newsurl = document.getElementById("url").value;
+        var newsinfo = newstitle + "*" + newsurl;
+
+        xmlHttp = createXMLHttp();
+        var url = "/newsController/insertNews";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送json字符串
+        //Content-Type其他格式信息：https://segmentfault.com/a/1190000004982390
+        xmlHttp.onreadystatechange = deletenewscallback;
+        xmlHttp.send(newsinfo);
+        //alert("addnews");
+    }
+
+    //获得新闻信息回调并同时更新表单
+    function getnewscallback() {
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+                var result = xmlHttp.responseText; //响应成功
+                strs = result.split("*");
+                //alert(result);
+                updatenewtableall();
+            }
+        }
+    }
+
+    //删除信息回调
+    function deletenewscallback() {
+        //alert("callback");
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+                var result = xmlHttp.responseText; //响应成功
+                alert(result == 1 ? "操作成功" : "操作失败");
+            }
+        }
+    }
+
+    function uppower() {
+        var strs = document.getElementById("username").value;
+        alert("操作成功");
+        var names = strs[1];
+        xmlHttp = createXMLHttp();
+        var url = "/UserController/updateUser";
+
+        xmlHttp.open("POST", url, true);
+        xmlHttp.setRequestHeader("cache-control", "no-cache");
+        xmlHttp.setRequestHeader("contentType", "text/html;charset=uft-8") //指定发送的编码
+        xmlHttp.setRequestHeader("Content-Type", "application/text");  //设置请求头信息,设置为发送字符串
+        xmlHttp.onreadystatechange = deletenewscallback;
+        xmlHttp.send(names);
+    }
+
+    //更新newtable
+    function updatenewtableall() {
+        //更新表头信息
+        var tablehtml = ""
+            + '<tr>'
+            + '<th class="text-center">编号</th>'
+            + '<th class="text-center">标题</th>'
+            + '<th class="text-center">日期</th>'
+            + '<th class="text-center">操作</th>'
+            + '</tr>';
+        document.getElementById("newstable").innerHTML = tablehtml;
+
+        //更新表内容
+        for (i = 0; i < strs.length; i++) {
+            var info = strs[i].split("+");
+            //alert(info);
+            if (info.length != 4) {
+                alert("error");
+                return;
+            }
+            var id = info[0], title = info[1], date = info[2], url = info[3];
+            var tablehtml = ""
+                + '<tr class="text-center" >'
+                + '<td>' + id + '</td>'
+                + '<td>' + title + '</td>'
+                + '<td>' + date + '</td>'
+                + '<td>'
+                + '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer" onClick="deletenews(' + id + ')">删除'
+                + '    </button>'
+                + '    </td>'
+                + '    </tr>';
+            document.getElementById("newstable").innerHTML = document.getElementById("newstable").innerHTML + tablehtml;
+        }
+    }
+
+    function createXMLHttp() {
+        var xmlHttp;
+        if (window.XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        }
+        if (window.ActiveXObject) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            if (!xmlHttp) {
+                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+        }
+        return xmlHttp;
+    }
+
+</script>
+</html>

@@ -1,0 +1,246 @@
+/*初始化样式*/
+body,h1,h2,h3,h4,h5,ul,li,a,div,p,span,table,tr,td,img{margin: 0;padding: 0;}
+ul{padding: 0;margin: 0;}
+li{list-style: none;}
+a{text-decoration: none;}
+img{outline: none;border: 0;}
+body{font-family: "Microsoft Yahei";}
+/*清除浮动*/
+.clearfix:before,
+.clearfix:after{content: " ";display: table;}
+.clearfix:after{clear: both;}
+.clearfix{zoom: 1;}
+/*浮动*/
+.pull-right{float: right !important;}
+.pull-left{float: left !important;}
+/*----------------------------------------------------------------------------------------------------------*/
+.content{float: left;}
+.flex-text-wrap{ height:auto; width:84%; float:left; margin-left:3% !important;}
+pre{margin: 0 !important;}
+.plBtn{width: 1rem;height: 1rem;line-height: .35rem;text-align: center;display: block;float: right;margin-right: 3%;margin-top: .3rem;}
+.plBtn img{	 display:block; width:100%;}
+
+/*----------评论区域 begin----------*/
+.commentAll{
+	padding-bottom:.97rem;
+}
+.comment{
+	width:100%;
+	background:#FFF;
+	margin-top:.5rem;
+}
+.comment-show{
+}
+.commentAll h1{
+	font-size:.8rem;
+	color:#333333;
+	font-weight:normal;
+	margin-top:0;
+	margin-bottom:.2rem;
+}
+.comment-show-con {
+    width: 100%;
+    border-top: 1px solid #EDEDED;
+    padding: .3rem 0 !important;
+    background-color: transparent;
+    -webkit-box-sizing: border-box;
+    		box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    		justify-content: space-between;
+}
+.aui-info {
+	position: relative;
+    padding: 0.5rem 0;
+    font-size: 0.7rem;
+    color: #757575;
+
+}
+.aui-info-item {
+	-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    		align-items: center;
+}
+.comment-show-con-img {
+	width:2.5rem !important;
+    height: 2.5rem !important;
+    overflow: hidden;
+	border-radius:100%;
+    margin-top: 5px;
+}
+.comment-show-con-img img{
+	display:block;
+	width:100%;
+}
+ul li .comment-show-con-list{
+	max-width:100%;
+	width:100%;	
+} 
+.no-img .comment-show-con-list{
+	margin-left:0;
+} 
+.comment-show-con-list {
+    margin-left: 3%;
+	width:78%;
+}
+.reviewArea{
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index:101;
+	width:100%;
+	height:auto;
+	padding-top:.3rem;
+	border-top:.01rem #b5b5b5 solid;
+	background:#e5e5e5;
+}
+.pl-text {
+    width: 100%;
+    margin-top: 7px;
+    word-wrap: break-word;
+    overflow: hidden;
+	vertical-align:top;
+}
+.date-dz {
+    width: 100%;
+    float: left;
+}
+.hf-list-con {
+    float: left;
+    width: 100%;
+    background-color: #eaeaec;
+    margin-top: 7px;
+}
+.comment-size-name {
+	display:block;
+	float:left;
+    font-size:.65rem;
+    color: #339b53;
+}
+.my-pl-con {
+	float:left;
+    font-size: .65rem;
+    color: #333333;
+    width: 100%;
+	line-height:1.5;
+	padding:.3rem 0;
+	font-weight:normal;
+}
+.date-dz-left {
+    font-size: .6rem;
+    color: #999999;
+    display: block;
+	width:50%;
+}
+.comment-pl-block {
+    margin-top: 0;
+}
+.date-dz-right {
+    display: block;
+    position: relative;
+    overflow: hidden;
+	width:50%;
+}
+.removeBlock {
+    float: left;
+    font-size: .24rem;
+    color: #8b8b8b;
+    margin-right: 24px;
+    display: block;
+    opacity: 0;
+}
+.hf-con-block {
+    display: block;
+}
+.date-dz-pl, .date-dz-line, .date-dz-z {
+    font-size: .6rem;
+    color: #999999;
+}
+.date-dz-line {
+    display: block;
+    padding: 0 1rem;
+}
+@media only screen and (max-width: 370px) {
+.date-dz-line {
+    display: block;
+    padding: 0 .5rem;
+}
+}
+.date-dz-z-click-red {
+	margin-top:.1rem;
+    margin-right: .15rem;
+}
+
+.z-num {
+    font-style: normal;
+}
+.date-dz-z-click {
+    color: #b83b44;
+}
+.red2 {
+    background-position: -7px -121px !important;
+}
+
+.hf-con{
+	width:100%;
+	margin-top:.2rem;
+}
+.hf-pl{width: .34rem;height: .35rem;line-height: .35rem;text-align: center;display: block;float: right;margin-top: .15rem;}
+.hf-pl img{	 display:block; width:100%;}
+.hf-input{font-size: .28rem;}
+.all-pl-con {
+    width: 96%;
+    padding: 2% 0;
+    float: left;
+    margin: 0 2%;
+}
+.atName {
+    font-size: 12px;
+    color: #339b53;
+}
+.hfpl-text{margin-top: 0;}
+.date-dz:hover .removeBlock {
+    opacity: 1;
+}
+.hf-list-con .all-pl-con {
+    border-top: 1px solid #d9d9d9;
+    padding-bottom: 12px;
+}
+.hf-list-con .all-pl-con:first-child {
+    border-top: 0;
+}
+
+
+
+/*----------评论区域 end----------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
